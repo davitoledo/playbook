@@ -1,36 +1,10 @@
 ---
 - hosts: localhost
-  vars:
-    # AWX Reprocessing
-    skip: false
-    succ: "{{ bypass | default ('no') }}"
-    reexec: "{{ reprocess | default ('no') }}"
-  
-  tasks:
-    - name: 'Verify if job is Holding ...'
-      ansible.builtin.include_role:
-        name: awx-functions
-        tasks_from: check_jobs
-      tags: [ check_hold ]
-      when: succ == 'no'
     
-    - name: AWX Reprocessing Flow...
-      ansible.builtin.include_role:
-        name: awx-functions
-        tasks_from: skip_job
-      vars:
-        template_name: "{{ template_name }}"
-        resume_job: "{{ resume_job | default('none') }}"
-      tags: [ skip_awx ]
-      when: reexec == 'yes' and pause_skip is undefined
-    
+  tasks: 
     - name: 'Sleeping ... hold workflow to {{ time }} seconds'
       ansible.builtin.include_role:
         name: awx-functions
         tasks_from: sleep
       vars:
         time: "{{ time }}"
-      tags: [ sleep_job ]
-      when: 
-        - not skip
-        - succ == 'no'
