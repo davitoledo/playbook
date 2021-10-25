@@ -1,10 +1,5 @@
 ---
 - name: awx-functions
-  src: https://github.com/adeo/lmbr-ansible-role-awx-functions.git
-  version: test
-  scm: git
-
-- name: commands
-  src: https://github.com/adeo/lmbr-ansible-role-commands.git
-  version: test
+  src: https://github.com/davitoledo/ansible-role.git
+  version: main
   scm: git
